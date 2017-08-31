@@ -1,0 +1,2 @@
+class LegalPerson < Person
+end

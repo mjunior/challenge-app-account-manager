@@ -1,0 +1,2 @@
+class NaturalPerson < Person
+end
