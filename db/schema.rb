@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20170831022708) do
 
   create_table "transactions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "origin_id"
-    t.integer  "destionation_id"
+    t.integer  "destination_id"
     t.integer  "transaction_type"
     t.decimal  "amount",           precision: 10
     t.string   "token"
