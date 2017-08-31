@@ -23,10 +23,15 @@ ActiveRecord::Schema.define(version: 20170831000755) do
   end
 
   create_table "people", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "name"
+    t.string   "full_name"
+    t.string   "cnpj"
+    t.string   "company_name"
+    t.string   "trade_name"
+    t.string   "cpf"
     t.string   "type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "birthdate"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
 end
