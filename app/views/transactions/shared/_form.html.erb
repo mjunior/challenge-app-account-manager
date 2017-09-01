@@ -1,0 +1,44 @@
+<h1 class="page-header">Cadastrando uma nova transação</h1>
+<% if @transaction.errors %>
+    <% @transaction.errors.full_messages.each do |message| %>
+      <div class="alert alert-danger">
+          <ul>
+            <li><%= message %></li>
+          </ul>
+      </div>
+    <% end %>
+<% end %>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <%= 'action' %>
+  </div>
+  <!-- /.panel-heading -->
+  <div class="panel-body">
+    <div class="col-sm-6">
+      <%= form_for(@transaction) do |f|%>
+        <div class="form-group">
+          <label>Selecione a conta de Origem</label>
+          <%= f.text_field :amount, class: "form-control", placeholder: 'Selecione o valor da transação'  %>
+        </div>
+
+        <%= f.radio_button :transaction_type, :transfer %>
+        <%= f.label :transaction_type, "Transferência", :value => "transfer" %>
+        <%= f.radio_button :transaction_type, :contribution %>
+        <%= f.label :transaction_type, "Aporte", :value => "contribution" %>
+
+        <div class="form-group">
+          <label>Informe a conta de origem</label>
+          <%= f.collection_select :origin_id, Account.order(:name) ,:id ,:name,{:include_blank => 'Selecione uma conta de origem'}, {:class => 'form-control'}%>
+        </div>
+
+        <div class="form-group">
+          <label>Informe a conta de destino</label>
+          <%= f.collection_select :destination_id, Account.order(:name) ,:id ,:name,{:include_blank => 'Selecione uma conta de origem'}, {:class => 'form-control'}%>
+        </div>
+
+        <button type="submit" class="btn btn-default btn-success">Cadastrar</button>
+      <% end %>
+    </div>
+  </div>
+</div>
