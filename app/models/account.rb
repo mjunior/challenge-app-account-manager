@@ -1,5 +1,5 @@
 class Account < ApplicationRecord
-  enum status: [:inactive, :active]
+  enum status: [:active, :blocked, :canceled]
 
   belongs_to :person
   belongs_to :parent, foreign_key: "parent_id", class_name: "Account", optional: true

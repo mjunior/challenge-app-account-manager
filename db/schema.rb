@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 20170831233819) do
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
     t.integer  "person_id"
-    t.integer  "status",        default: 1
+    t.integer  "status",        default: 0
   end
 
   create_table "people", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
