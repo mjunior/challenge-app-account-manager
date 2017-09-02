@@ -17,20 +17,22 @@
               <th>Operação</th>
               <th>Valor</th>
               <th>Destino</th>
-              <th>Ações</th>
+              <th>Cód. Autorização</th>
+              <th></th>
             </tr>
         </thead>
         <tbody>
             <% @transactions.each do |transaction| %>
-              <tr>
+              <tr class="<%= transaction.transaction_type %>">
                 <td><%= transaction.id %></td>
                 <td><%= transaction.origin.name %></td>
                 <td><%= transaction.transaction_type %></td>
                 <td><%= transaction.amount %></td>
                 <td><%= transaction.destination.name %></td>
+                <td><%= transaction.token %></td>
                 <td style="width: 100px;">
-                  <%= link_to '#!' , class: "btn btn-primary btn-circle" do %>
-                    <i class="fa fa-edit"></i>
+                  <%= link_to transaction_path(transaction), class: "btn btn-primary btn-circle" do %>
+                    <i class="fa fa-eye"></i>
                   <% end %>
                 </td>
               </tr>

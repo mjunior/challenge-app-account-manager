@@ -1,4 +1,4 @@
-<h1 class="page-header">Cadastrando uma nova transação</h1>
+<h1 class="page-header"><%= title_action %></h1>
 <% if @transaction.errors %>
     <% @transaction.errors.full_messages.each do |message| %>
       <div class="alert alert-danger">
@@ -11,33 +11,58 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    <%= 'action' %>
+    <%= title_action %>
   </div>
   <!-- /.panel-heading -->
   <div class="panel-body">
-    <div class="col-sm-6">
-      <%= form_for(@transaction) do |f|%>
-        <div class="form-group">
-          <label>Selecione a conta de Origem</label>
-          <%= f.text_field :amount, class: "form-control", placeholder: 'Selecione o valor da transação'  %>
+    <div class="col-sm-8">
+        <%= form_for(@transaction, url: {action: action}, method: 'POST') do |f|%>]
+        <% if readonly %>
+          <input type="hidden" name="transaction_token" id="transaction_token_confirmation" value="">    
+          <input type="hidden" name="id" id="transaction_id_confirmation" value="<%= @transaction.id %>">    
+          <input type="hidden" name="transaction_type" id="transaction_type_confirmation" value="<%= @transaction.transaction_type %>">    
+
+          <h3><%= @transaction.transaction_type.titleize %> realizada em <%= @transaction.created_at %></h3>
+        <% else %>
+          <h4>O que deseja fazer ?</h4>
+          <%= f.radio_button :transaction_type, :transfer %>
+          <%= f.label :transaction_type, "Uma transferência", :value => "transfer" %>
+          <%= f.radio_button :transaction_type, :contribution %>
+          <%= f.label :transaction_type, "Um aporte", :value => "contribution" %>
+          <br><br>
+        <% end %>  
+        <% if readonly %>
+          <label>Conta de origem</label>
+          <%= f.text_field :origin, value: @transaction.origin.name, class: "form-control", :readonly => readonly, placeholder: 'Informe valor da transação'  %>
+          
+          <label>Conta de destino</label>
+          <%= f.text_field :destination, value: @transaction.destination.name, class: "form-control", :readonly => readonly, placeholder: 'Informe valor da transação'  %>
+          <% if @transaction.contribution? %>
+            <label>Cod. de Autorização</label>
+            <%= f.text_field :token, value: @transaction.token, class: "form-control", :readonly => readonly, placeholder: 'Informe valor da transação'  %>
+          <%end%>
+        <% else %>
+          <div class="form-group">
+            <label>Informe a conta de origem</label>
+            <%= f.collection_select :origin_id, Account.order(:name) ,:id ,:name,{:include_blank => 'Selecione uma conta de origem'}, {:class => 'form-control'}%>
+          </div>
+
+          <div class="form-group">
+            <label>Informe a conta de destino</label>
+            <%= f.collection_select :destination_id, Account.order(:name) ,:id ,:name,{:include_blank => 'Selecione uma conta de origem'}, {:class => 'form-control'}%>
+          </div>
+        <% end %>
+
+        <label for=""> Informe o valor da transação</label>
+        <div class="form-group input-group">
+          <span class="input-group-addon">R$ </span>
+          <%= f.text_field :amount, class: "form-control", :readonly => readonly, placeholder: 'Informe valor da transação'  %>
         </div>
-
-        <%= f.radio_button :transaction_type, :transfer %>
-        <%= f.label :transaction_type, "Transferência", :value => "transfer" %>
-        <%= f.radio_button :transaction_type, :contribution %>
-        <%= f.label :transaction_type, "Aporte", :value => "contribution" %>
-
-        <div class="form-group">
-          <label>Informe a conta de origem</label>
-          <%= f.collection_select :origin_id, Account.order(:name) ,:id ,:name,{:include_blank => 'Selecione uma conta de origem'}, {:class => 'form-control'}%>
-        </div>
-
-        <div class="form-group">
-          <label>Informe a conta de destino</label>
-          <%= f.collection_select :destination_id, Account.order(:name) ,:id ,:name,{:include_blank => 'Selecione uma conta de origem'}, {:class => 'form-control'}%>
-        </div>
-
-        <button type="submit" class="btn btn-default btn-success">Cadastrar</button>
+          <% if readonly %>
+            <%= f.submit "Estornar transação", class: "btn btn-default btn-danger",id: "reversal_transaction", data:{confirm: "Você realmente realizar esta transação ?"} %>
+          <% else %>
+            <%= f.submit "Realizar transação", class: "btn btn-default btn-success", data:{confirm: "Você realmente realizar esta transação ?"} %>
+          <% end %>
       <% end %>
     </div>
   </div>

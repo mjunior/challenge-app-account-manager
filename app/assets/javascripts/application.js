@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
+//= require notifyjs
+//= require bootbox
 //= require bootstrap_sb_admin_base_v2
 //= require_tree .

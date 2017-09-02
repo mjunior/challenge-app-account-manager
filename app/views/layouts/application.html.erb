@@ -10,8 +10,8 @@
     <meta name="author" content="">
     <title>Account Manager</title>
     <%= csrf_meta_tags %>
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
 </head>
 <body>
   <div id="wrapper">
@@ -53,6 +53,17 @@
     </div>
     <!-- /#page-wrapper -->
   </div>
+    <% if notice %>
+        <script>
+            $.notify("<%= notice %>","success");
+        </script>
+    <% end %>
+
+    <% if alert %>
+        <script>
+            $.notify("<%= alert %>","error");
+        </script>
+    <% end %>
 </body>
 
 </html>

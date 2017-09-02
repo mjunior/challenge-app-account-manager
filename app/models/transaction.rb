@@ -11,7 +11,7 @@ class Transaction < ApplicationRecord
   after_initialize :generate_token
 
   def generate_token
-    if self.contribution?
+    if self.contribution? && self.token.blank?
       begin
         self.token = SecureRandom.hex(12)      
       end while Transaction.exists?(token: self.token)
