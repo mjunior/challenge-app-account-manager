@@ -1,0 +1,17 @@
+pt-BR:
+  activerecord:
+    models:
+      transaction: 
+        one: Transação
+        other: Transações
+        errors:
+          not_a_branch: 'Não é uma filial da conta de origem ou é uma conta Matriz'
+          not_a_main: 'Não é uma conta Matriz'
+          not_active: 'Não é uma conta ativa'
+    attributes:
+      transaction:
+        origin: "Conta de Origem"
+        destination: "Conta de destino"
+        amount: "Valor"
+        transaction_type: "Tipo da transação"
+        status: "Situaçao"

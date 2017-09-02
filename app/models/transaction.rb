@@ -5,7 +5,7 @@ class Transaction < ApplicationRecord
 
   belongs_to :origin, class_name: "Account"
   belongs_to :destination, class_name: "Account"
-  validates :transaction_type, presence: true
+  validates :transaction_type, :amount, presence: true
   validates :token, uniqueness: true, allow_blank: true, allow_nil: true
 
   validates_with TransactionValidator
