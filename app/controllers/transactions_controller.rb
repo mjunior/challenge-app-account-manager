@@ -16,26 +16,54 @@ class TransactionsController < ApplicationController
   def create  
     @transaction = Transaction.new(transaction_params)
     if @transaction.save()
-      redirect_to transactions_path, notice: "Transação realizada com sucesso";
+      respond_to do |format|
+        format.html { redirect_to transactions_path, notice: "Transação realizada com sucesso"; }
+        format.json { render json: @transaction}
+      end
     else
-      render :new
+       respond_to do |format|
+        format.html { render :new }
+        format.json { render json: { errors: @transaction.errors}}
+      end
     end
   end
 
   def reversal
     token = params[:transaction_token].blank? ? nil : params[:transaction_token]
     transaction = Transaction.find_by(id: params[:id],
-                                      token: token)
-                                      byebug
+                                      token: token)                              
     if transaction
-      Transaction.create(origin: transaction.destination,
+      if transaction.reversal?
+        respond_to do |format|
+          format.html { render 'index', alert: "Não é possivel cancelar um estorno." }
+          format.json { render json: { errors: 'Não é possivel cancelar um estorno.'} }
+        end
+        return
+      end
+      if transaction.canceled?
+        respond_to do |format|
+          format.html { render 'index', alert: "Transação já estornada" }
+          format.json { render json: { errors: 'Transação já estornada'} }
+        end
+        return
+      end
+      
+      transaction_reversal =Transaction.create(origin: transaction.destination,
                         destination: transaction.origin,
                         amount: transaction.amount,
                         transaction_type: 'reversal');
 
-      redirect_to transactions_path, notice: "Estorno realizado com sucesso";
+      transaction.status = 'canceled'
+      transaction.save()
+      respond_to do |format|
+        format.html { redirect_to transactions_path, notice: "Estorno realizado com sucesso" }
+        format.json { render json: transaction_reversal }
+      end
     else
-      #do something
+      respond_to do |format|
+        format.html { redirect_to transactions_path, alert: "Código de Autorização inválido. Entre em contato"; }
+        format.json { render json: { errors: 'Código de Autorização inválido. Entre em contato'} }
+      end
     end
   end
 

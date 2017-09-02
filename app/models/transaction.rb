@@ -1,4 +1,6 @@
 class Transaction < ApplicationRecord
+  enum status: [:completed, :pending, :canceled]
+  
   enum transaction_type: [ :transfer, :contribution, :reversal ]
 
   belongs_to :origin, class_name: "Account"

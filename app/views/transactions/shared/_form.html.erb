@@ -16,7 +16,7 @@
   <!-- /.panel-heading -->
   <div class="panel-body">
     <div class="col-sm-8">
-        <%= form_for(@transaction, url: {action: action}, method: 'POST') do |f|%>]
+        <%= form_for(@transaction, url: {action: action}, method: 'POST') do |f|%>
         <% if readonly %>
           <input type="hidden" name="transaction_token" id="transaction_token_confirmation" value="">    
           <input type="hidden" name="id" id="transaction_id_confirmation" value="<%= @transaction.id %>">    
@@ -58,12 +58,16 @@
           <span class="input-group-addon">R$ </span>
           <%= f.text_field :amount, class: "form-control", :readonly => readonly, placeholder: 'Informe valor da transação'  %>
         </div>
+        <%# unless @transaction.reversal? %>
           <% if readonly %>
             <%= f.submit "Estornar transação", class: "btn btn-default btn-danger",id: "reversal_transaction", data:{confirm: "Você realmente realizar esta transação ?"} %>
           <% else %>
             <%= f.submit "Realizar transação", class: "btn btn-default btn-success", data:{confirm: "Você realmente realizar esta transação ?"} %>
           <% end %>
+        <%# end %>
       <% end %>
     </div>
   </div>
 </div>
+
+

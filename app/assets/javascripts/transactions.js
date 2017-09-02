@@ -1,4 +1,9 @@
 $(document).ready(function(){
+
+  $(document).ready(function() {
+    $('#transaction_list_table').DataTable({searching: false});
+  });
+
   $('#reversal_transaction').click(function(){
     console.log('Reversal Transaction');
     var transaction_type = $('#transaction_type_confirmation').val();

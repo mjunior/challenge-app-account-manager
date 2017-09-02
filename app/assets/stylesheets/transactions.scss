@@ -1,20 +1,17 @@
 // Place all the styles related to the transaction controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-// tr.transfer{
-//     background: #51b551 !important;
-//     color: #fff;
-//     font-weight: bold;
-// }
+tr.completed{
+    color: #51b551 !important;
+    font-weight: bold;
+}
 
-// tr.contribution{
-//     background: #337ab7 !important;
-//     color: #fff;
-//     font-weight: bold;
-// }
+tr.pending{
+    color: #337ab7 !important;
+    font-weight: bold;
+}
 
-// tr.reversal{
-//     background: #da3d3d !important;
-//     color: #fff;
-//     font-weight: bold;
-// }
+tr.canceled{
+    color: #da3d3d !important;
+    font-weight: bold;
+}
