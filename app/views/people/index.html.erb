@@ -1,0 +1,41 @@
+<h1 class="page-header">Usuários</h1>
+<div class="panel panel-default">
+  <div class="panel-heading">
+      Todas Usuários
+      <%= link_to new_transaction_path, class: "btn btn-success btn-circle pull-right", style: "margin-top:-5px;" do %>
+        <i class="fa fa-plus"></i>
+      <% end %>
+  </div>
+  <!-- /.panel-heading -->
+  <div class="panel-body">
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-hover" id="people_list_table">
+        <thead>
+            <tr>
+              <th>#</th>
+              <th>Nome</th>
+              <th>Documento</th>
+              <th>Tipo</th>
+              <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @people.each do |person| %>
+              <tr class="<%= person[:type] %>">
+                <td><%= person[:id] %></td>
+                <td><%= person[:name] %></td>
+                <td><%= person[:document] %></td>
+                <td><%= person[:type] %></td>
+                <td style="width: 100px;">
+                  <%= link_to '#!', class: "btn btn-primary btn-circle" do %>
+                    <i class="fa fa-eye"></i>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

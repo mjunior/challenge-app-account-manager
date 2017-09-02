@@ -1,5 +1,5 @@
 class TransactionsController < ApplicationController
-  before_action :set_transaction, only: [:edit, :show]
+  before_action :set_transaction, only: [:show]
   
   def index
     @transactions = Transaction.all
@@ -8,8 +8,6 @@ class TransactionsController < ApplicationController
   def new
     @transaction = Transaction.new
   end
-
-  def edit; end
 
   def show; end
 
@@ -47,12 +45,10 @@ class TransactionsController < ApplicationController
         end
         return
       end
-      
-      transaction_reversal =Transaction.create(origin: transaction.destination,
-                        destination: transaction.origin,
-                        amount: transaction.amount,
-                        transaction_type: 'reversal');
-
+      transaction_reversal = Transaction.create(origin: transaction.destination,
+                                                destination: transaction.origin,
+                                                amount: transaction.amount,
+                                                transaction_type: 'reversal');
       transaction.status = 'canceled'
       transaction.save()
       respond_to do |format|
