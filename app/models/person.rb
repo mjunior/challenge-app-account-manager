@@ -4,4 +4,10 @@ class Person < ApplicationRecord
   scope :actives, -> { where(status: 0) }
 
   has_many :accounts
+
+
+  def name
+    self.full_name.blank? ? self.company_name : self.full_name
+  end
+
 end

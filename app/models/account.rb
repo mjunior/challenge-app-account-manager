@@ -6,6 +6,7 @@ class Account < ApplicationRecord
 
   scope :actives, -> { where(status: 0) }
 
+
   def main?
     self.type.downcase == 'main'
   end

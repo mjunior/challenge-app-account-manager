@@ -1,0 +1,49 @@
+<h1 class="page-header">Contas</h1>
+<div class="panel panel-default">
+  <div class="panel-heading">
+      Todas as contas
+      <%= link_to '#!', class: "btn btn-success btn-circle pull-right", style: "margin-top:-5px;" do %>
+        <i class="fa fa-plus"></i>
+      <% end %>
+  </div>
+  <!-- /.panel-heading -->
+  <div class="panel-body">
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-hover" id="people_list_table">
+        <thead>
+            <tr>
+              <th>#</th>
+              <th>Nome</th>
+              <th>Responsável </th>
+              <th>Tipo</th>
+              <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @accounts.each do |account| %>
+              <tr class="<%= account.type %>">
+                <td><%= account.id %></td>
+                <td><%= account.name %></td>
+                <td>
+                <%= link_to account.person.name, person_path(account.person) %>
+                </td>
+                <td><%= account.type %></td>
+                <td style="width: 100px;">
+                  <%= link_to '#!', class: "btn btn-primary btn-circle" do %>
+                    <i class="fa fa-eye"></i>
+                  <% end %>
+                  <%= link_to '#!', class: "btn btn-warning btn-circle" do %>
+                    <i class="fa fa-edit"></i>
+                  <% end %>
+                  <%= link_to '#!', method: :delete,data: {confirm: 'Deseja realmente desativar este usuario ?'} , class: "btn btn-danger btn-circle" do %>
+                    <i class="fa fa-close"></i>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
