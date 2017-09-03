@@ -16,7 +16,11 @@
   <%= f.text_field :cpf, class: "br_cpf_format form-control",readonly: readonly, placeholder: 'CPF'  %>
 
   <label>Data de Nascimento</label>
-  <%= f.text_field :birthdate, class: "br_date_format form-control",readonly: readonly, placeholder: 'Data de nascimento'  %>
+  <% if @person.birthdate %>
+    <%= f.text_field :birthdate, value: @person.birthdate.strftime('%d/%m/%Y'), class: "br_date_format form-control",readonly: readonly, placeholder: 'Data de nascimento'  %>
+  <% else %>
+    <%= f.text_field :birthdate, class: "br_date_format form-control",readonly: readonly, placeholder: 'Data de nascimento'  %>
+  <% end %>
   <br />
   <% unless readonly %>
     <%= f.submit "Cadastrar", class: "btn btn-default btn-success" %>

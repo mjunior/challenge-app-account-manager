@@ -1,9 +1,10 @@
 class Account < ApplicationRecord
-  enum status: [:active, :blocked, :canceled]
-
+  enum status: [:active, :inactive]
   belongs_to :person
   belongs_to :parent, foreign_key: "parent_id", class_name: "Account", optional: true
   has_many :branches, foreign_key: "parent_id", class_name: "Account", dependent: :delete_all
+
+  scope :actives, -> { where(status: 0) }
 
   def main?
     self.type.downcase == 'main'

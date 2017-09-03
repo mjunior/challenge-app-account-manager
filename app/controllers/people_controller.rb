@@ -1,8 +1,8 @@
 class PeopleController < ApplicationController
-  before_filter :set_person, only: [:show]
+  before_filter :set_person, only: [:show, :edit, :update, :destroy]
 
   def index
-    @people = Person.all.reverse.map do |person|
+    @people = Person.actives.order('id DESC').map do |person|
       if person.type == 'NaturalPerson'
         {id:person.id, name: person.full_name, document: CPF.new(person.cpf).formatted, type: 'Pessoa física'}
       else
@@ -15,15 +15,31 @@ class PeopleController < ApplicationController
     @person = Person.new
   end
 
-  def show;  end
+  def show; end
+  def edit; end
 
   def create
     @person = Person.new(people_params)
     if @person.save
       redirect_to people_path, notice: "Cadastro realizado com sucesso"
     else
-      render :new
+      render :edit
     end
+  end
+
+  def update
+    if @person.update(people_params)
+      redirect_to people_path, notice: "Informações atualizadas com sucesso"
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @person.accounts.update_all({status: 'inactive'})
+    @person.update({status: 'inactive'})
+
+    redirect_to people_path, notice: "Usuário excluido com sucesso"
   end
 
   private

@@ -1,0 +1,11 @@
+<div class="col-md-6">
+  <% if @person.type == 'NaturalPerson' %>
+    <h1 class="page-header">Pessoa Física</h1>
+    <%= render partial: "people/shared/form_natural", locals: {readonly: false}%>
+  <% end %>
+  
+  <% if @person.type == 'LegalPerson' %>
+    <h1 class="page-header">Pessoa Jurídica</h1>
+    <%= render partial: "people/shared/form_legal", locals: {readonly: false} %>
+  <% end %>
+</div>
