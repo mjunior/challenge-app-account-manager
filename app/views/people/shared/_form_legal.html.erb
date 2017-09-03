@@ -1,0 +1,26 @@
+<% if @person.errors %>
+        <% @person.errors.full_messages.each do |message| %>
+          <div class="alert alert-danger">
+              <ul>
+                <li><%= message %></li>
+              </ul>
+          </div>
+        <% end %>
+    <% end %>
+<%= form_for @person do |f| %>
+  <input type="hidden" name="type" value="LegalPerson">
+
+  <label>Razão Social</label>
+  <%= f.text_field :company_name,readonly: readonly, class: "form-control", placeholder: 'Razão Social'  %>
+  
+  <label>Nome Fantasia</label>
+  <%= f.text_field :trade_name,readonly: readonly, class: "form-control", placeholder: 'Nome Fantasia'  %>
+  
+  <label>CNPJ</label>
+  <%= f.text_field :cnpj,readonly: readonly, class: "br_cnpj_format form-control", placeholder: 'CNPJ'  %>
+  
+  <br />
+  <% unless readonly %>
+    <%= f.submit "Cadastrar", class: "btn btn-default btn-success" %> 
+  <% end %>
+<% end %>

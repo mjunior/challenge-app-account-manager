@@ -2,6 +2,9 @@ Rails.application.routes.draw do
  
   root 'transactions#index'
   resources :people
+  resources :people, as: 'natural_people'
+  resources :people, as: 'legal_people'
+  
   resources :transactions, except: [:destroy, :edit, :update]
   post '/transactions/:id/reversal', to: 'transactions#reversal', as: 'transaction_reversal'
 
