@@ -1,4 +1,46 @@
-# README
+
+# Necessidade a ser resolvida: Sistema para controle de contas
+Você deve criar um CRUD para manutenção de Contas de saldo. Podemos ter 2 tipos de contas:
+
+**Conta Matriz** – É a conta principal, a qual pode ter (n) contas filhas e essas também podem possuir suas filhas, formando assim uma hierarquia. É a principal conta da estrutura.
+
+
+**Contas Filiais** – É uma conta idêntica a Conta Matriz, porém possui obrigatoriamente uma conta Pai (pode ser a Conta Matriz ou outra Conta Filial) e pode ou não ter uma Conta Filial abaixo.
+
+**Dados para o Cadastro de Contas**
+- Nome
+- Data de Criação
+
+_Obs: Toda Conta deve possuir uma Pessoa e esta pode ser Jurídica ou Física_
+
+**Dados para Pessoa Jurídica**
+- CNPJ
+- Razão Social
+- Nome Fantasia
+
+**Dados para Pessoa Física**
+- CPF
+- Nome Completo
+- Data Nascimento
+
+**Funcionalidade de Transferência**
+
+Toda Conta Filial pode efetuar transferências desde que a conta que receberá a transferência esteja debaixo da mesma árvore e não seja uma conta Matriz.
+
+A Conta Matriz não pode receber transferências de outras contas, apenas Aportes que devem possuir um código alfanumérico único.
+
+Toda transação pode ser estornada (no caso de um estorno de um Aporte é necessário informar o código alfanumérico para que a transação possa ser estornada).
+Apenas as Contas Ativas podem receber Aportes ou Transferências
+
+**Situação da Conta**
+- Toda Conta pode estar ativa, bloqueada ou cancelada;
+- Todo Histórico de transações deve ser armazenado e consultado.
+
+**Glossário de termos**
+Aporte - Entrada de valores diretamente na Conta Matriz, através de uma transação qualquer.
+Transferência – Valores movimentados entre contas, onde uma é debitada e a outra é creditada.
+
+
 
 ## Ambiente de Desenvolvimento
 * [Instale Virtual Box](http://www.virtualbox.org/wiki/Downloads)
