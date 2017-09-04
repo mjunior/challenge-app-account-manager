@@ -8,22 +8,20 @@
 * Acesse a máquina virtual com o comando `vagrant ssh`
 * Na máquina virtual acesse a pasta do projeto `cd /vagrant`
 * Rode os comandos para configuração do ambiente Rails.
->> `bundle install`
 
->>`rake db:create db:migrate db:seed`
+ `bundle install`
+
+`rake db:create db:migrate db:seed`
 * Suba o servidor rails rodando o comando  `rails s -b 0.0.0.0`
 * O Projeto estara disponivel em `http://localhost:3300`
 
 Things you may want to cover:
 
-* Ruby version
->>ruby 2.4.0
+* Ruby version: 2.4.0
 
-* Rails version
->> Rails 5.0.5
+* Rails version: 5.0.5
 
-* Banco de dados (Development)
->> MySQL
+* Banco de dados: MySQL
 
 # Documentação da API
 
