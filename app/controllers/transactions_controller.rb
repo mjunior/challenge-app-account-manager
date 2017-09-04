@@ -3,6 +3,10 @@ class TransactionsController < ApplicationController
   
   def index
     @transactions = Transaction.order('id DESC')
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: @transactions}
+    end
   end
 
   def new
@@ -28,23 +32,19 @@ class TransactionsController < ApplicationController
 
   def reversal
     token = params[:transaction_token].blank? ? nil : params[:transaction_token]
-    transaction = Transaction.find_by(id: params[:id],
-                                      token: token)                              
-    if transaction
-      if transaction.reversal?
-        respond_to do |format|
-          format.html { render 'index', alert: "Não é possivel cancelar um estorno." }
-          format.json { render json: { errors: 'Não é possivel cancelar um estorno.'} }
-        end
-        return
+    transaction = Transaction.find_by(id: params[:id], token: token)   
+                               
+    if transaction && transaction.reversal?
+      respond_to do |format|
+        format.html { redirect_to transactions_path, alert: "Não é possivel cancelar um estorno." }
+        format.json { render json: { errors: 'Não é possivel cancelar um estorno.'} }
       end
-      if transaction.canceled?
-        respond_to do |format|
-          format.html { render 'index', alert: "Transação já estornada" }
-          format.json { render json: { errors: 'Transação já estornada'} }
-        end
-        return
-      end
+    elsif transaction && transaction.canceled?
+      respond_to do |format|
+        format.html { redirect_to transactions_path, alert: "Transação já estornada" }
+        format.json { render json: { errors: 'Transação já estornada'} }
+      end  
+    elsif transaction && !transaction.reversal? && !transaction.canceled?  
       transaction_reversal = Transaction.create(origin: transaction.destination,
                                                 destination: transaction.origin,
                                                 amount: transaction.amount,
@@ -55,7 +55,7 @@ class TransactionsController < ApplicationController
         format.html { redirect_to transactions_path, notice: "Estorno realizado com sucesso" }
         format.json { render json: transaction_reversal }
       end
-    else
+    elsif !transaction
       respond_to do |format|
         format.html { redirect_to transactions_path, alert: "Código de Autorização inválido. Entre em contato"; }
         format.json { render json: { errors: 'Código de Autorização inválido. Entre em contato'} }
