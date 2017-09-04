@@ -2,7 +2,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">
       Todas as contas
-      <%= link_to '#!', class: "btn btn-success btn-circle pull-right", style: "margin-top:-5px;" do %>
+      <%= link_to new_account_path, class: "btn btn-success btn-circle pull-right", style: "margin-top:-5px;" do %>
         <i class="fa fa-plus"></i>
       <% end %>
   </div>
@@ -29,13 +29,13 @@
                 </td>
                 <td><%= account.type %></td>
                 <td style="width: 100px;">
-                  <%= link_to '#!', class: "btn btn-primary btn-circle" do %>
+                  <%= link_to account_path(account), class: "btn btn-primary btn-circle" do %>
                     <i class="fa fa-eye"></i>
                   <% end %>
-                  <%= link_to '#!', class: "btn btn-warning btn-circle" do %>
+                  <%= link_to edit_account_path(account), class: "btn btn-warning btn-circle" do %>
                     <i class="fa fa-edit"></i>
                   <% end %>
-                  <%= link_to '#!', method: :delete,data: {confirm: 'Deseja realmente desativar este usuario ?'} , class: "btn btn-danger btn-circle" do %>
+                  <%= link_to account_path(account), method: :delete,data: {confirm: 'Deseja realmente desativar ?'} , class: "btn btn-danger btn-circle" do %>
                     <i class="fa fa-close"></i>
                   <% end %>
                 </td>

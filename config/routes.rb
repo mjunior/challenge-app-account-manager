@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   root 'transactions#index'
   resources :accounts
+  resources :accounts, as: 'mains'
+  resources :accounts, as: 'branches'
   resources :people
   resources :people, as: 'natural_people'
   resources :people, as: 'legal_people'

@@ -1,0 +1,45 @@
+<% if @account.errors %>
+  <% @account.errors.full_messages.each do |message| %>
+    <div class="alert alert-danger">
+        <ul>
+          <li><%= message %></li>
+        </ul>
+    </div>
+  <% end %>
+<% end %>
+<%= form_for @account do |f| %>
+  <div class="form-group">
+    <label>Nome</label>
+    <%= f.text_field :name, readonly: readonly, class: "form-control", placeholder: 'Nome da conta'  %>
+  </div>
+
+  <% if readonly %>
+    <div class="form-group">
+      <label>Responsável</label>
+      <%= f.text_field :person, readonly: readonly, class: "form-control", value: @account.person.name %>
+    </div>
+    
+    <% if @account.parent %>
+      <div class="form-group">
+        <label>Conta Matriz</label>
+        <%= f.text_field :parent_id, readonly: readonly, class: "form-control",value: @account.parent.name  %>
+      </div>
+    <% end %>
+  <% else %>
+    <%= f.radio_button :type, 'Main', class: 'radio_type_account' %>
+    <%= f.label :type, "Conta Matriz", :value => "Main" %>
+    <%= f.radio_button :type, 'Branch', class: 'radio_type_account' %>
+    <%= f.label :type, "Filial", :value => "Branch" %>
+    
+    <div class="form-group">
+      <label>Responsável</label>
+      <%= f.collection_select :person_id, Person.all ,:id ,:name,{:include_blank => 'Selecione um responsável'}, {:class => 'form-control'}%>
+    </div>
+    <div class="form-group" id="select_parant_id">
+      <label>Conta matriz</label>
+      <%= f.collection_select :parent_id, Main.all ,:id ,:name,{:include_blank => 'Selecione uma conta matriz'}, {:class => 'form-control'}%>
+    </div>
+
+    <%= f.submit "Cadastrar", class: "btn btn-default btn-success" %>
+  <% end %> 
+<% end %>

@@ -10,8 +10,19 @@ pt-BR:
           not_active: 'Não é uma conta ativa'
     attributes:
       transaction:
+        situation:
+          completed: 'Completa'
+          pending: 'Pendente'
+          canceled: 'Cancelada'
+        type:
+          transfer: 'Transferência'
+          contribution: 'Aporte'
+          reversal: 'Estorno'
         origin: "Conta de Origem"
         destination: "Conta de destino"
         amount: "Valor"
         transaction_type: "Tipo da transação"
         status: "Situaçao"
+
+
+        
