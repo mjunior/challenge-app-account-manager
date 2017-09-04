@@ -69,9 +69,10 @@ Transferência – Valores movimentados entre contas, onde uma é debitada e a o
 
 # Documentação da API
 
-# API Pessoas
+## API Pessoas
 
-### Listando todas as pessoas cadastradas.
+**Listando todas as pessoas cadastradas.**
+
 #GET /api/people
 
 ```
@@ -89,7 +90,8 @@ Transferência – Valores movimentados entre contas, onde uma é debitada e a o
     }
 ]
 ```
-### Listando informações de uma pessoa
+**Listando informações de uma pessoa**
+
 #GET /api/people/:id
 
 ```
@@ -106,7 +108,8 @@ Transferência – Valores movimentados entre contas, onde uma é debitada e a o
   "status": "active"
 }
 ```
-### Cadastrando um novo usuário
+**Cadastrando um novo usuário**
+
 #POST /api/people
 
 
@@ -130,7 +133,7 @@ Transferência – Valores movimentados entre contas, onde uma é debitada e a o
   }
 ```
 
-### Atualizar dados de um usuário
+**Atualizar dados de um usuário**
 #PATCH/PUT /api/people/:id
 
 ```
@@ -139,14 +142,16 @@ Transferência – Valores movimentados entre contas, onde uma é debitada e a o
   }
 ```
 
-### Excluir um usuário
+**Excluir uma pessoa**
 
 #DELETE /api/people/:id
 * Nenhum dado é retornado, Aguarde um HTTP STATUS 204
 
+_Nenhuma exclusão fisica é realizada. O Sistema apenas faz exclusão lógica dos dados setando todas as contas do usuário e o proprio usuário para `status: inactive`_
+
 # API Contas
 
-### Listando todas as contas
+**Listando todas as contas**
 
 #GET /api/accounts
 
@@ -174,7 +179,7 @@ Transferência – Valores movimentados entre contas, onde uma é debitada e a o
   }]
 ```
 
-### Listando dados de uma conta
+**Listando dados de uma conta**
 
 #GET /api/accounts/:id
 * `account` Informações da conta
@@ -240,14 +245,15 @@ _#TODO: Listar filiais e informações da Matriz_
 }
 ```
 
-### Cadastrando uma nova conta
+**Cadastrando uma nova conta**
 
 * `person_id`: Campo obrigatorio. Toda conta deve ser associada a uma pessoa.
 
 * `parent_id`: Quando se cadastra uma filial é necessário informar uma conta matriz.
 
 
-#### Para cadastrar uma filial envie `type: 'Branch'`
+**Para cadastrar uma filial envie `type: 'Branch'`**
+
 #POST /api/accounts
 ```
 {
@@ -258,7 +264,8 @@ _#TODO: Listar filiais e informações da Matriz_
 }
 ```
 
-#### Para cadastrar uma Matriz envie `type: 'Main'`
+**Para cadastrar uma Matriz envie `type: 'Main'`**
+
 #POST /api/accounts
 ```
 {
@@ -268,7 +275,7 @@ _#TODO: Listar filiais e informações da Matriz_
 }
 ```
 
-### Atualizando informações de uma Cona
+**Atualizando informações de uma Conta**
 
 #PUT/PATCH /api/accounts/:id
 
@@ -285,7 +292,8 @@ _#TODO: Listar filiais e informações da Matriz_
 
 #  API Transações
 
-#### Lista todas as transações
+**Lista todas as transações**
+
 #GET /api/transactions
 
 ```
@@ -367,7 +375,8 @@ _#TODO: Listar filiais e informações da Matriz_
   }
 ]
 ```
-#### Cria uma nova transação
+**Cria uma nova transação**
+
 #POST api/transactions
 
 * `transaction_type` - Tipo da transação - `'transfer' | 'contribution'`
@@ -384,7 +393,8 @@ _#TODO: Listar filiais e informações da Matriz_
 }
 ```
 
-### Estornando uma transação
+**Estornando uma transação**
+
 #POST api/transactions/:transaction_id/reversal
 
 * Para estornar uma transação do tipo `contribution` é necessário informar o token da transação. Para transações do tipo `transfer` não envie este campo ou passe como string vazia `""`
