@@ -102,7 +102,142 @@ Things you may want to cover:
 
 # API Contas
 
-#dosomething
+### Listando todas as contas
+
+#GET /api/accounts
+
+```
+[
+  {
+    "id": 9,
+    "name": "MJUNIOR 1000",
+    "parent_id": null,
+    "creation_date": null,
+    "created_at": "2017-09-04T02:02:53.000-03:00",
+    "updated_at": "2017-09-04T02:02:53.000-03:00",
+    "person_id": 16,
+    "status": "active"
+  },
+  {
+    "id": 8,
+    "name": "abc123",
+    "parent_id": 5,
+    "creation_date": null,
+    "created_at": "2017-09-03T21:34:49.000-03:00",
+    "updated_at": "2017-09-03T21:34:49.000-03:00",
+    "person_id": 1,
+    "status": "active"
+  }]
+```
+
+### Listando dados de uma conta
+
+#GET /api/accounts/:id
+* `account` Informações da conta
+* `transaction_input[]` Todas as transações onde a conta foi o DESTINO. Entradas de valores.
+* `transaction_output[]` Todas as transações onde a conta foi a ORIGEM. Saida de valores. 
+
+_#TODO: Listar filiais e informações da Matriz_
+```
+{
+  "account": {
+    "id": 3,
+    "name": "100.2",
+    "parent_id": 1,
+    "creation_date": null,
+    "created_at": "2017-08-31T23:54:38.000-03:00",
+    "updated_at": "2017-08-31T23:54:38.000-03:00",
+    "person_id": 1,
+    "status": "active"
+  },
+  "transactions_input": [{
+    "id": 48,
+    "origin_id": 1,
+    "destination_id": 3,
+    "transaction_type": "reversal",
+    "amount": 987,
+    "token": null,
+    "created_at": "2017-09-03T22:45:02.000-03:00",
+    "updated_at": "2017-09-03T22:45:02.000-03:00",
+    "status": "completed"
+  },{
+    "id": 49,
+    "origin_id": 1,
+    "destination_id": 3,
+    "transaction_type": "transfer",
+    "amount": 876,
+    "token": null,
+    "created_at": "2017-09-03T22:48:10.000-03:00",
+    "updated_at": "2017-09-04T01:14:42.000-03:00",
+    "status": "canceled"
+  }],
+  "transactions_output": [{
+    "id": 47,
+    "origin_id": 3,
+    "destination_id": 1,
+    "transaction_type": "contribution",
+    "amount": 987,
+    "token": "4adb3e4803a5918b6b45535a",
+    "created_at": "2017-09-03T22:42:04.000-03:00",
+    "updated_at": "2017-09-03T22:45:02.000-03:00",
+    "status": "canceled"
+  },
+  {
+    "id": 51,
+    "origin_id": 3,
+    "destination_id": 1,
+    "transaction_type": "reversal",
+    "amount": 113,
+    "token": null,
+    "created_at": "2017-09-04T01:07:19.000-03:00",
+    "updated_at": "2017-09-04T01:07:19.000-03:00",
+    "status": "completed"
+  }]
+}
+```
+
+### Cadastrando uma nova conta
+
+* `person_id`: Campo obrigatorio. Toda conta deve ser associada a uma pessoa.
+
+* `parent_id`: Quando se cadastra uma filial é necessário informar uma conta matriz.
+
+
+#### Para cadastrar uma filial envie `type: 'Branch'`
+#POST /api/accounts
+```
+{
+  "name":"MJUNIOR - Filial", 
+  "type":"Branch", 
+  "person_id":"16",
+  "parent_id":"16",
+}
+```
+
+#### Para cadastrar uma Matriz envie `type: 'Main'`
+#POST /api/accounts
+```
+{
+  "name":"MJUNIOR - Matriz", 
+  "type":"Main", 
+  "person_id":"16",
+}
+```
+
+### Atualizando informações de uma Cona
+
+#PUT/PATCH /api/accounts/:id
+
+```
+{
+  "name":"MJUNIOR"
+} 
+```
+
+### Desativando uma conta
+#DELETE /api/account/:id
+* Aguarde retorno HTTP STATUS 204 
+
 
 #  API Transações
 
