@@ -1,5 +1,5 @@
 class PeopleController < ApplicationController
-  before_filter :set_person, only: [:show, :edit, :update, :destroy]
+  before_action :set_person, only: [:show, :edit, :update, :destroy]
 
   def index
     @people = Person.actives.order('id DESC').map do |person|
@@ -20,9 +20,16 @@ class PeopleController < ApplicationController
   end
 
   def show
-    respond_to do |format|
-      format.html
-      format.json { render json: @person}
+    if @person
+      respond_to do |format|
+        format.html
+        format.json { render json: @person}
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to people_path, notice: "Usuário não existe" }
+        format.json { head :not_found }
+      end
     end
   end
   def edit; end
@@ -32,12 +39,12 @@ class PeopleController < ApplicationController
     if @person.save
       respond_to do |format|
         format.html { redirect_to people_path, notice: "Cadastro realizado com sucesso" }
-        format.json { render json: @person}
+        format.json { render json: @person, status: :created}
       end
     else
       respond_to do |format|
         format.html { render :edit }
-        format.json { render json: {errors: @person.errors }}
+        format.json { render json: {errors: @person.errors }, status: :unprocessable_entity }
       end
     end
   end
@@ -67,7 +74,7 @@ class PeopleController < ApplicationController
 
   private
     def set_person
-      @person = Person.find(params[:id])
+      @person = Person.find_by(id: params[:id])
     end
 
     def people_params

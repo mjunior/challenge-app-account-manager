@@ -1,5 +1,5 @@
 class AccountsController < ApplicationController
-  before_filter :set_account, only: [:show, :edit, :update, :destroy]
+  before_action :set_account, only: [:show, :edit, :update, :destroy]
   
   def index
     @accounts = Account.actives.order('id DESC')
@@ -51,12 +51,12 @@ class AccountsController < ApplicationController
     if @account.save
       respond_to do |format|
         format.html { redirect_to accounts_path, notice: 'Conta criada com sucesso' }
-        format.json { render json: @account }
+        format.json { render json: @account, status: :created}
       end
     else
       respond_to do |format|
         format.html { render :new }
-        format.json { render json: {errors: @account.errors }}
+        format.json { render json: {errors: @account.errors }, status: :unprocessable_entity }}
       end
     end
   end
