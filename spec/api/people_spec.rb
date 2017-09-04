@@ -57,6 +57,18 @@ RSpec.describe 'People API', type: :request do
         expect(json_body[:cpf]).to eq(person_params[:cpf])
       end
     end
+
+    context 'Quando os dados da pessoa NÂO estão corretos' do
+      let(:person_params){ FactoryGirl.attributes_for(:natural_person, cpf: "invalid_cpf") }
+   
+      it 'Esperamos código 401, :unprocessable_entity' do
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+      
+      it 'Retorna mensagens de errors' do
+       expect(json_body).to have_key(:errors)
+      end
+    end
   end
 
   describe 'DELETE /api/people/:id' do
