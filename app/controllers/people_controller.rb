@@ -9,37 +9,60 @@ class PeopleController < ApplicationController
         {id:person.id, name: person.company_name, document: person.cnpj, type: 'Pessoa jurídica'}
       end
     end
+    respond_to do |format|
+      format.html
+      format.json { render json: @people}
+    end
   end
 
   def new
     @person = Person.new
   end
 
-  def show; end
+  def show
+    respond_to do |format|
+      format.html
+      format.json { render json: @person}
+    end
+  end
   def edit; end
 
   def create
     @person = Person.new(people_params)
     if @person.save
-      redirect_to people_path, notice: "Cadastro realizado com sucesso"
+      respond_to do |format|
+        format.html { redirect_to people_path, notice: "Cadastro realizado com sucesso" }
+        format.json { render json: @person}
+      end
     else
-      render :edit
+      respond_to do |format|
+        format.html { render :edit }
+        format.json { render json: {errors: @person.errors }}
+      end
     end
   end
 
   def update
     if @person.update(people_params)
-      redirect_to people_path, notice: "Informações atualizadas com sucesso"
+      respond_to do |format|
+        format.html { redirect_to people_path, notice: "Informações atualizadas com sucesso" }
+        format.json { render json: @person}
+      end
     else
-      render :edit
+      respond_to do |format|
+        format.html { render :edit }
+        format.json { render json: {errors: @person.errors } }
+      end
     end
   end
 
   def destroy
     @person.accounts.update_all({status: 'inactive'})
     @person.update({status: 'inactive'})
-
-    redirect_to people_path, notice: "Usuário excluido com sucesso"
+    respond_to do |format|
+      format.html { redirect_to people_path, notice: "Usuário excluido com sucesso" }
+      format.json { head :no_content }
+    end
   end
 
   private
@@ -50,12 +73,9 @@ class PeopleController < ApplicationController
     def people_params
       params[:person] = params[:natural_person] if params[:natural_person]
       params[:person] = params[:legal_person] if params[:legal_person]
-      params[:person][:type] = params[:type] 
+      params[:person][:type] = params[:type] if params[:type] 
 
-      if params[:type] == 'NaturalPerson'
-        params.require(:person).permit(:full_name,:cpf,:birthdate,:type)      
-      elsif params[:type] == 'LegalPerson'
-        params.require(:person).permit(:company_name,:trade_name,:cnpj,:type)
-      end
+      params.require(:person).permit(:full_name,:cpf,:birthdate,:company_name,:trade_name,:cnpj,:type)
+
     end
 end

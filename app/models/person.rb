@@ -5,6 +5,7 @@ class Person < ApplicationRecord
 
   has_many :accounts
 
+  validates :type, presence: true
 
   def name
     self.full_name.blank? ? self.company_name : self.full_name
