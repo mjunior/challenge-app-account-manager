@@ -20,12 +20,12 @@ class TransactionsController < ApplicationController
     if @transaction.save()
       respond_to do |format|
         format.html { redirect_to transactions_path, notice: "Transação realizada com sucesso"; }
-        format.json { render json: @transaction, status: :created}
+        format.json { render json: @transaction }
       end
     else
        respond_to do |format|
         format.html { render :new }
-        format.json { render json: { errors: @transaction.errors, status: :unprocessable_entity }}}
+        format.json { render json: { errors: @transaction.errors} }
       end
     end
   end
