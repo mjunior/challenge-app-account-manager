@@ -8,6 +8,9 @@ pt-BR:
           not_a_branch: 'Não é uma filial da conta de origem ou é uma conta Matriz'
           not_a_main: 'Não é uma conta Matriz'
           not_active: 'Não é uma conta ativa'
+      person: 
+        one: Pessoa
+        other: Pessoas
     attributes:
       transaction:
         situation:
@@ -23,6 +26,15 @@ pt-BR:
         amount: "Valor"
         transaction_type: "Tipo da transação"
         status: "Situaçao"
+      account:
+        parent: 'Conta matriz'
+        person: 'Responsável'
+        type: 'Tipo da conta'
+      person:
+        birthdate: 'Data de nascimento'
+        full_name: 'Nome completo'
+        company_name: 'Razão Social'
+        trade_name: 'Nome fantasia'
 
 
         

@@ -56,7 +56,7 @@ class AccountsController < ApplicationController
     else
       respond_to do |format|
         format.html { render :new }
-        format.json { render json: {errors: @account.errors }, status: :unprocessable_entity }}
+        format.json { render json: {errors: @account.errors }, status: :unprocessable_entity }
       end
     end
   end
