@@ -14,8 +14,7 @@ RSpec.describe 'People API', type: :request do
       it { expect(json_body.size).to eq(10) }
     end
   end
-
-
+  
   describe 'GET /api/people/:id' do
     let!(:person){ FactoryGirl.create(:natural_person) }
     let!(:person_id){ person.id }
