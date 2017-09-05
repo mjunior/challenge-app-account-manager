@@ -22,7 +22,7 @@
           <input type="hidden" name="id" id="transaction_id_confirmation" value="<%= @transaction.id %>">    
           <input type="hidden" name="transaction_type" id="transaction_type_confirmation" value="<%= @transaction.transaction_type %>">    
 
-          <h3><%= @transaction.transaction_type.titleize %> realizada em <%= @transaction.created_at %></h3>
+          <h3><%=t("activerecord.attributes.transaction.type.#{@transaction.transaction_type}") %> em <%= @transaction.created_at.strftime('%d/%m/%Y às %H:%m') %></h3>
         <% else %>
           <h4>O que deseja fazer ?</h4>
           <%= f.radio_button :transaction_type, :transfer %>
